@@ -17,7 +17,7 @@ def filter_datum(fields: List[str], redaction: str,
 
 def get_logger() -> logging.Logger:
     """Creates and returns a new logger for user data
-    
+
     Returns:
         A new logger object
     """
