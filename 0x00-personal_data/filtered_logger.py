@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """defines a function filter_datum"""
+import os
 import re
 import logging
 import mysql.connector
-from os import getenv
 from typing import List
 
 
@@ -38,10 +38,10 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     Returns:
         A MySQLConnection object that was created use to manage the connection
     """
-    user = getenv('PERSONAL_DATA_DB_USERNAME', 'root')
-    passwd = getenv('PERSONAL_DATA_DB_PASSWORD', '')
-    host = getenv('PERSONAL_DATA_DB_HOST', 'localhost')
-    db_name = getenv('PERSONAL_DATA_DB_NAME')
+    user = os.getenv('PERSONAL_DATA_DB_USERNAME', 'root')
+    passwd = os.getenv('PERSONAL_DATA_DB_PASSWORD', '')
+    host = os.getenv('PERSONAL_DATA_DB_HOST', 'localhost')
+    db_name = os.getenv('PERSONAL_DATA_DB_NAME')
     connection = mysql.connector.connect(user=user,
                                          password=passwd,
                                          host=host,
