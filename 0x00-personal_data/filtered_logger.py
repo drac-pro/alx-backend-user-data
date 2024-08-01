@@ -36,20 +36,15 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     """ Creates a connection to a secure mysql database
 
     Returns:
-        A MySQLConnection object that was created use to manage the connection
+        A MySQLConnection object that was created.
     """
-    username = os.getenv('PERSONAL_DATA_DB_USERNAME', 'root')
-    password = os.getenv('PERSONAL_DATA_DB_PASSWORD', '')
-    host = os.getenv('PERSONAL_DATA_DB_HOST', 'localhost')
-    database = os.getenv('PERSONAL_DATA_DB_NAME')
-
-    db = mysql.connector.connect(
-        user=username,
-        password=password,
-        host=host,
-        database=database
-    )
-    return db
+    credentials = {
+        'user': os.getenv('PERSONAL_DATA_DB_USERNAME', 'root'),
+        'password': os.getenv('PERSONAL_DATA_DB_PASSWORD', ''),
+        'host': os.getenv('PERSONAL_DATA_DB_HOST', 'localhost'),
+        'database': os.getenv('PERSONAL_DATA_DB_NAME')
+        }
+    return mysql.connector.connect(**credentials)
 
 
 def main():
