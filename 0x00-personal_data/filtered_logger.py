@@ -38,13 +38,14 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     Returns:
         A MySQLConnection object that was created use to manage the connection
     """
-    credentials = {
-        'user': getenv('PERSONAL_DATA_DB_USERNAME', 'root'),
-        'password': getenv('PERSONAL_DATA_DB_PASSWORD', ''),
-        'host': getenv('PERSONAL_DATA_DB_HOST', 'localhost'),
-        'database': getenv('PERSONAL_DATA_DB_NAME'),
-    }
-    connection = mysql.connector.connect(**credentials)
+    user = getenv('PERSONAL_DATA_DB_USERNAME') or "root"
+    passwd = getenv('PERSONAL_DATA_DB_PASSWORD') or ""
+    host = getenv('PERSONAL_DATA_DB_HOST') or "localhost"
+    db_name = getenv('PERSONAL_DATA_DB_NAME')
+    connection = mysql.connector.connect(user=user,
+                                   password=passwd,
+                                   host=host,
+                                   database=db_name)
     return connection
 
 
