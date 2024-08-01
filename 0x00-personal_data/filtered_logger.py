@@ -2,6 +2,8 @@
 """defines a function filter_datum"""
 import re
 import logging
+import mysql.connector
+from os import getenv
 from typing import List
 
 
@@ -28,6 +30,22 @@ def get_logger() -> logging.Logger:
     stream_handler.setFormatter(RedactingFormatter(list(PII_FIELDS)))
     logger.addHandler(stream_handler)
     return logger
+
+
+def get_db() -> mysql.connector.connection.MySQLConnection:
+    """ Creates a connection to a secure mysql database
+
+    Returns:
+        A MySQLConnection object that was created use to manage the connection
+    """
+    credentials = {
+        'user': getenv('PERSONAL_DATA_DB_USERNAME', 'root'),
+        'password': getenv('PERSONAL_DATA_DB_PASSWORD', ''),
+        'host': getenv('PERSONAL_DATA_DB_HOST', 'localhost'),
+        'database': getenv('PERSONAL_DATA_DB_NAME'),
+    }
+    connection = mysql.connector.connect(**credentials)
+    return connection
 
 
 class RedactingFormatter(logging.Formatter):
