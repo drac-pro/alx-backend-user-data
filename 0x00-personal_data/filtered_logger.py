@@ -33,18 +33,23 @@ def get_logger() -> logging.Logger:
 
 
 def get_db() -> mysql.connector.connection.MySQLConnection:
-    """ Creates a connection to a secure mysql database
+    """
+    Returns a MySQLConnection object for accessing Personal Data database
 
     Returns:
-        A MySQLConnection object that was created.
+        A MySQLConnection object using connection details from
+        environment variables
     """
-    credentials = {
-        'user': os.getenv('PERSONAL_DATA_DB_USERNAME', 'root'),
-        'password': os.getenv('PERSONAL_DATA_DB_PASSWORD', ''),
-        'host': os.getenv('PERSONAL_DATA_DB_HOST', 'localhost'),
-        'database': os.getenv('PERSONAL_DATA_DB_NAME')
-        }
-    return mysql.connector.connect(**credentials)
+    username = os.getenv("PERSONAL_DATA_DB_USERNAME", "root")
+    password = os.getenv("PERSONAL_DATA_DB_PASSWORD", "")
+    host = os.getenv("PERSONAL_DATA_DB_HOST", "localhost")
+    db_name = os.getenv("PERSONAL_DATA_DB_NAME")
+
+    cnx = mysql.connector.connection.MySQLConnection(user=username,
+                                                     password=password,
+                                                     host=host,
+                                                     database=db_name)
+    return cnx
 
 
 def main():
