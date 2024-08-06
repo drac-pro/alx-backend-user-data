@@ -73,8 +73,11 @@ class BasicAuth(Auth):
             User: a user object
         """
         if user_email and type(user_email) is str:
-            users = User.search({'email': user_email})
-            if len(users) > 0:
-                if users[0].is_valid_password(user_pwd):
-                    return users[0]
+            try:
+                users = User.search({'email': user_email})
+                if len(users) > 0:
+                    if users[0].is_valid_password(user_pwd):
+                        return users[0]
+            except Exception:
+                return None
         return None
