@@ -58,7 +58,7 @@ class BasicAuth(Auth):
         """
         if type(decoded_base64_authorization_header) is str and \
                 ':' in decoded_base64_authorization_header:
-            return tuple(decoded_base64_authorization_header.split(':'))
+            return tuple(decoded_base64_authorization_header.split(':', 1))
         return (None, None)
 
     def user_object_from_credentials(
