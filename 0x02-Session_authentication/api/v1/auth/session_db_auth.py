@@ -36,27 +36,14 @@ class SessionDBAuth(SessionExpAuth):
         Returns:
             str: the user id that has that session
         """
-        try:
-            sessions = UserSession.search({'session_id': session_id})
-        except Exception:
-            return None
-        if len(sessions) <= 0:
-            return None
-        cur_time = datetime.now()
-        time_span = timedelta(seconds=self.session_duration)
-        exp_time = sessions[0].created_at + time_span
-        if exp_time < cur_time:
-            return None
-        return sessions[0].user_id
-
-        """if type(session_id) is str:
+        if type(session_id) is str:
             user_sessions = UserSession.search({'session_id': session_id})
             if len(user_sessions) == 0:
                 return None
             time_span = timedelta(seconds=self.session_duration)
             if (user_sessions[0].created_at + time_span) < datetime.now():
                 return None
-            return user_sessions[0].user_id"""
+            return user_sessions[0].user_id
 
     def destroy_session(self, request=None):
         """deletes the user session / logout
@@ -65,11 +52,9 @@ class SessionDBAuth(SessionExpAuth):
             request (request obj): A user logout request
         """
         session_id = self.session_cookie(request)
-        try:
+        if session_id is not None:
             user_sessions = UserSession.search({'session_id': session_id})
-        except Exception:
-            return False
-        if len(user_sessions) > 0:
-            user_sessions[0].remove()
-            return True
+            if len(user_sessions) > 0:
+                user_sessions[0].remove()
+                return True
         return False
