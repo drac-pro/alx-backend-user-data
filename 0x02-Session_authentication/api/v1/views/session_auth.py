@@ -13,8 +13,8 @@ def login():
     """
     from api.v1.app import auth
 
-    email = request.form.get(email)
-    password = request.form.get(password)
+    email = request.form.get('email')
+    password = request.form.get('password')
     if email is None or email == '':
         return jsonify({"error": "email missing"}), 400
     if password is None or password == '':
