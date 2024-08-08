@@ -52,9 +52,11 @@ class SessionDBAuth(SessionExpAuth):
             request (request obj): A user logout request
         """
         session_id = self.session_cookie(request)
-        if session_id is not None:
+        try:
             user_sessions = UserSession.search({'session_id': session_id})
-            if len(user_sessions) > 0:
-                user_sessions[0].remove()
-                return True
+        except Exception:
+            return False
+        if len(user_sessions) > 0:
+            user_sessions[0].remove()
+            return True
         return False
