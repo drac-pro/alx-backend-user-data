@@ -52,6 +52,8 @@ class Auth:
 
         Args:
             request (request obj): a request object
+        Returns:
+            any: the value of a request cookie specified in SESSION_NAME
         """
         if request:
             return request.cookies.get(getenv('SESSION_NAME'))
