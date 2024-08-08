@@ -45,7 +45,7 @@ class SessionDBAuth(SessionExpAuth):
         time_span = timedelta(seconds=self.session_duration)
         if (user_sessions[0].created_at + time_span) < datetime.now():
             return None
-        return sessions[0].user_id
+        return user_sessions[0].user_id
 
     def destroy_session(self, request=None):
         """deletes the user session / logout
