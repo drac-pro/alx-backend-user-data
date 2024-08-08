@@ -2,7 +2,6 @@
 """Module for session Authentication using session id
 stored in database
 """
-from os import getenv
 from datetime import datetime, timedelta
 from models.user_session import UserSession
 from .session_exp_auth import SessionExpAuth
@@ -52,11 +51,10 @@ class SessionDBAuth(SessionExpAuth):
         Args:
             request (request obj): A user logout request
         """
-        if request is not None:
-            session_id = request.cookies.get(getenv('SESSION_NAME'))
-            if session_id is not None:
-                user_sessions = UserSession.search({'session_id': session_id})
-                if len(user_sessions) > 0:
-                    user_sessions[0].remove()
-                    return True
+        session_id = self.session_cookie(request)
+        if session_id is not None:
+            user_sessions = UserSession.search({'session_id': session_id})
+            if len(user_sessions) > 0:
+                user_sessions[0].remove()
+                return True
         return False
