@@ -47,13 +47,15 @@ class DB:
         self._session.commit()
         return user
 
-    def find_user_by(self, **kwargs):
+    def find_user_by(self, **kwargs) -> User:
+        """ finds a user in the database base on some attributes
+
+        Returns:
+            User: return the first user to match
         """
-        """
-        try:
-            user = self._session.query(User).filter_by(**kwargs).one()
-            return user
-        except NoResultFound:
-            raise NoResultFound
-        except InvalidRequestError:
+        if not kwargs:
             raise InvalidRequestError
+        user = self._session.query(User).filter_by(**kwargs).first()
+        if not user:
+            raise NoResultFound
+        return user
