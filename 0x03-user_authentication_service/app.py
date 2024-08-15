@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """ flask app module
 """
-from flask import (Flask, jsonify, request, abort,
-                   make_response, redirect)
+from flask import Flask, jsonify, request, abort, make_response, redirect
 from auth import Auth
 
 
@@ -49,7 +48,7 @@ def logout():
     """
     session_id = request.cookies.get('session_id')
     user = AUTH.get_user_from_session_id(session_id)
-    if not user:
+    if user is None or session_id is None:
         abort(403)
     AUTH.destroy_session(user.id)
     return redirect('/')
