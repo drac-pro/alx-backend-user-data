@@ -2,7 +2,7 @@
 """ flask app module
 """
 from flask import (Flask, jsonify, request, abort,
-                   make_response, url_for, redirect)
+                   make_response, redirect)
 from auth import Auth
 
 
@@ -52,7 +52,7 @@ def logout():
     if not user:
         abort(403)
     AUTH.destroy_session(user.id)
-    return redirect(url_for('index'))
+    return redirect('/')
 
 
 if __name__ == "__main__":
