@@ -54,7 +54,7 @@ class DB:
             User: return the first user to match
         """
         try:
-            user = self._session.query(User).filter_by(**kwargs).one()
+            user = self._session.query(User).filter_by(**kwargs).first()
         except NoResultFound:
             raise NoResultFound
         except InvalidRequestError:
