@@ -21,10 +21,9 @@ def users():
     """ route to register a new user
     """
     try:
-        AUTH.register_user(request.form.get('email'),
-                           request.form.get('password'))
-        return jsonify({'email': request.form.get('email'),
-                        'message': 'user created'})
+        user = AUTH.register_user(request.form.get('email'),
+                                  request.form.get('password'))
+        return jsonify({'email': user.email, 'message': 'user created'})
     except Exception:
         return jsonify({'message': 'email already registered'}), 400
 
